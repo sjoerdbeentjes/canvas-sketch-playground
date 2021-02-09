@@ -4,7 +4,7 @@
   "description": "Static \"parametric\" noise function.",
   "main": "index.html",
   "scripts": {
-    "start": "canvas-sketch src/index.js --hot",
+    "start": "canvas-sketch src/index.js --hot --port 3000",
     "build": "canvas-sketch src/index.js --build --inline"
   },
   "dependencies": {
