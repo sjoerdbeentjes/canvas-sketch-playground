@@ -14,24 +14,24 @@ console.log("Random Seed:", Random.getSeed());
 const settings = {
   hotkeys: false,
   suffix: Random.getSeed(),
-  dimensions: "letter",
-  orientation: "portrait",
-  pixelsPerInch: 300
+  animate: true,
+  duration: 5,
+  dimensions: [ 1000, 1000],
+  fps: 30
 };
 
 const sketch = ({ width, height }) => {
   const pageSize = Math.min(width, height);
 
   // page settings
-  const margin = pageSize * 0.15;
+  const margin = 0;
   const gridSize = 50;
   const background = "hsl(0, 0%, 5%)";
 
   // segment settings
   const length = pageSize * 0.1;
   const lineWidth = pageSize * 0.00175;
-  const frequency = 0.5;
-  const foreground = "white";
+  const frequency = 0.75;
   const alpha = 1;
 
   // Create some flat data structure worth of points
@@ -43,14 +43,14 @@ const sketch = ({ width, height }) => {
     })
     .flat();
 
-  return ({ context }) => {
+  return ({ context, frame, playhead }) => {
     // Fill the canvas
     context.fillStyle = background;
     context.globalAlpha = 1;
     context.fillRect(0, 0, width, height);
 
     // draw grid
-    const innerSize = pageSize - margin * 2;
+    const innerSize = pageSize - margin * 1;
     cells.forEach(cell => {
       const [u, v] = cell;
 
@@ -62,13 +62,17 @@ const sketch = ({ width, height }) => {
       x += (width - innerSize) / 2;
       y += (height - innerSize) / 2;
 
-      // draw cell
-      context.globalAlpha = alpha;
-      context.strokeStyle = foreground;
-
       // get a random angle from noise
       const n = Random.noise2D(u * 2 - 1, v * 2 - 1, frequency);
-      const angle = n * Math.PI * 2;
+      // const angle = n * Math.PI * 2;
+      const angle = Math.PI * playhead + n * 5;
+
+      // draw cell
+      context.globalAlpha = alpha;
+      context.strokeStyle = n < 0.1 ? 'transparent' : `hsl(${(n) * 100}, ${
+        (n) * 100
+      }%, ${n * 100}%)`;
+
       segment(context, x, y, angle, length, lineWidth);
     });
   };
