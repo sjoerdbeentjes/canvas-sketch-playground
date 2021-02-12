@@ -16,8 +16,8 @@ const settings = {
   suffix: Random.getSeed(),
   animate: true,
   duration: 5,
-  dimensions: [ 1000, 1000],
-  fps: 30
+  dimensions: [1000, 1000],
+  fps: 30,
 };
 
 const sketch = ({ width, height }) => {
@@ -26,7 +26,7 @@ const sketch = ({ width, height }) => {
   // page settings
   const margin = 0;
   const gridSize = 50;
-  const background = "hsl(0, 0%, 5%)";
+  const background = "black";
 
   // segment settings
   const length = pageSize * 0.1;
@@ -36,8 +36,8 @@ const sketch = ({ width, height }) => {
 
   // Create some flat data structure worth of points
   const cells = linspace(gridSize, true)
-    .map(v => {
-      return linspace(gridSize, true).map(u => {
+    .map((v) => {
+      return linspace(gridSize, true).map((u) => {
         return [u, v];
       });
     })
@@ -51,7 +51,7 @@ const sketch = ({ width, height }) => {
 
     // draw grid
     const innerSize = pageSize - margin * 1;
-    cells.forEach(cell => {
+    cells.forEach((cell) => {
       const [u, v] = cell;
 
       // scale to inner size
@@ -69,9 +69,8 @@ const sketch = ({ width, height }) => {
 
       // draw cell
       context.globalAlpha = alpha;
-      context.strokeStyle = n < 0.1 ? 'transparent' : `hsl(${(n) * 100}, ${
-        (n) * 100
-      }%, ${n * 100}%)`;
+      context.strokeStyle =
+        n < 0.1 ? "transparent" : `hsl(${n * 100}, ${n * 100}%, ${n * 100}%)`;
 
       segment(context, x, y, angle, length, lineWidth);
     });
