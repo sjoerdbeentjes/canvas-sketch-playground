@@ -29,10 +29,7 @@ function perc2color(perc) {
 const settings = {
   hotkeys: false,
   suffix: Random.getSeed(),
-  animate: true,
-  duration: 5,
   dimensions: [1000, 1000],
-  fps: 30,
 };
 
 const sketch = ({ width, height }) => {
@@ -68,7 +65,7 @@ const sketch = ({ width, height }) => {
       const [u, v] = cell;
 
       const n = Random.noise2D(u * 2, v * 2, frequency);
-      const size = Math.abs(n) * 20 * Math.sin(Math.PI * playhead);
+      const size = Math.abs(n) * 15;
 
       // scale to inner size
       let x = u * innerSize;
@@ -84,9 +81,7 @@ const sketch = ({ width, height }) => {
       context.fillStyle = "white";
       context.fill();
 
-      if (size > 1) {
-        dot(context, x, y, size);
-      }
+      dot(context, x, y, size);
     });
   };
 };

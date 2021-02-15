@@ -70,7 +70,7 @@ const sketch = ({ width, height }) => {
       // draw cell
       context.globalAlpha = alpha;
       context.strokeStyle =
-        n < 0.1 ? "transparent" : `hsl(${n * 100}, ${n * 100}%, ${n * 100}%)`;
+        n < 0.1 ? "transparent" : `hsl(40, 100%, ${n * 100}%)`;
 
       segment(context, x, y, angle, length, lineWidth);
     });
