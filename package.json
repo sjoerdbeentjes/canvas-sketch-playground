@@ -4,14 +4,20 @@
   "description": "Static \"parametric\" noise function.",
   "main": "index.html",
   "scripts": {
-    "start": "canvas-sketch src/waves.js --hot --port 3000",
-    "build": "canvas-sketch src/waves.js --build --inline"
+    "start": "webpack serve --open",
+    "build": "webpack"
   },
   "dependencies": {
     "canvas-sketch": "0.0.27",
     "canvas-sketch-cli": "1.1.7",
-    "canvas-sketch-util": "1.4.1"
+    "canvas-sketch-util": "1.4.1",
+    "clean-webpack-plugin": "^3.0.0",
+    "html-webpack-plugin": "^5.1.0",
+    "webpack": "^5.22.0"
   },
-  "devDependencies": {},
-  "keywords": []
+  "keywords": [],
+  "devDependencies": {
+    "@webpack-cli/serve": "^1.3.0",
+    "webpack-dev-server": "^3.11.2"
+  }
 }

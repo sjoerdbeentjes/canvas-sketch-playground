@@ -1,6 +1,6 @@
-const createSketch = require("canvas-sketch");
-const Random = require("canvas-sketch-util/random");
-const { linspace } = require("canvas-sketch-util/math");
+import canvasSketch from "canvas-sketch";
+import Random from "canvas-sketch-util/random";
+import { linspace } from "canvas-sketch-util/math";
 
 const defaultSeed = "";
 
@@ -51,4 +51,4 @@ const sketch = ({ width, height }) => {
   };
 };
 
-createSketch(sketch, settings);
+canvasSketch(sketch, settings);

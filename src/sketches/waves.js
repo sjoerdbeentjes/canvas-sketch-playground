@@ -1,6 +1,6 @@
-const canvasSketch = require("canvas-sketch");
-const Random = require("canvas-sketch-util/random");
-const { linspace } = require("canvas-sketch-util/math");
+import canvasSketch from "canvas-sketch";
+import Random from "canvas-sketch-util/random";
+import { linspace } from "canvas-sketch-util/math";
 
 // You can force a specific seed by replacing this with a string value
 const defaultSeed = "";
@@ -11,25 +11,13 @@ Random.setSeed(defaultSeed || Random.getRandomSeed());
 // Print to console so we can see which seed is being used and copy it if desired
 console.log("Random Seed:", Random.getSeed());
 
-function perc2color(perc) {
-  var r,
-    g,
-    b = 0;
-  if (perc < 50) {
-    r = 255;
-    g = Math.round(5.1 * perc);
-  } else {
-    g = 255;
-    r = Math.round(510 - 5.1 * perc);
-  }
-  var h = r * 0x10000 + g * 0x100 + b * 0x1;
-  return "#" + ("000000" + h.toString(16)).slice(-6);
-}
-
 const settings = {
   hotkeys: false,
   suffix: Random.getSeed(),
+  animate: true,
+  duration: 5,
   dimensions: [1000, 1000],
+  fps: 30,
 };
 
 const sketch = ({ width, height }) => {
@@ -41,6 +29,8 @@ const sketch = ({ width, height }) => {
   const background = "black";
 
   // segment settings
+  const length = pageSize * 0.1;
+  const lineWidth = pageSize * 0.00175;
   const frequency = 0.75;
   const alpha = 1;
 
@@ -64,9 +54,6 @@ const sketch = ({ width, height }) => {
     cells.forEach((cell) => {
       const [u, v] = cell;
 
-      const n = Random.noise2D(u * 2, v * 2, frequency);
-      const size = Math.abs(n) * 15;
-
       // scale to inner size
       let x = u * innerSize;
       let y = v * innerSize;
@@ -75,20 +62,30 @@ const sketch = ({ width, height }) => {
       x += (width - innerSize) / 2;
       y += (height - innerSize) / 2;
 
+      // get a random angle from noise
+      const n = Random.noise2D(u * 2 - 1, v * 2 - 1, frequency);
+      // const angle = n * Math.PI * 2;
+      const angle = Math.PI * playhead + n * 5;
+
       // draw cell
       context.globalAlpha = alpha;
-      context.strokeStyle = "white";
-      context.fillStyle = "white";
-      context.fill();
+      context.strokeStyle =
+        n < 0.1 ? "transparent" : `hsl(40, 100%, ${n * 100}%)`;
 
-      dot(context, x, y, size);
+      segment(context, x, y, angle, length, lineWidth);
     });
   };
 };
 
-function dot(context, x, y, size) {
+function segment(context, x, y, angle = 0, length = 1, lineWidth = 1) {
+  const halfLength = length / 2;
+  const u = Math.cos(angle) * halfLength;
+  const v = Math.sin(angle) * halfLength;
+
   context.beginPath();
-  context.arc(x, y, size, 0, 2 * Math.PI, true);
+  context.moveTo(x - u, y - v);
+  context.lineTo(x + u, y + v);
+  context.lineWidth = lineWidth;
   context.stroke();
 }
 
