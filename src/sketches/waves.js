@@ -22,13 +22,14 @@ const sketch = ({ width, height }) => {
   const pageSize = Math.min(width, height);
 
   const margin = 0;
-  const gridSize = 60;
+  const gridSize = 50;
   const background = "black";
   const strokeHue = Random.range(0, 360); 
 
   const length = pageSize * 0.1;
   const lineWidth = pageSize * 0.00175;
   const frequency = 0.75;
+  const amplitude = 1.5;
   const alpha = 1;
 
   const cells = linspace(gridSize, true)
@@ -54,12 +55,14 @@ const sketch = ({ width, height }) => {
       x += (width - innerSize) / 2;
       y += (height - innerSize) / 2;
 
-      const n = Random.noise2D(u * 2, v * 2, frequency);
+      const n = Random.noise2D(u * 2, v * 2, frequency, amplitude);
       const angle = Math.PI * playhead + n * 5;
 
       context.globalAlpha = alpha;
       context.strokeStyle =
-        n < 0.1 ? "transparent" : `hsl(${strokeHue}, 100%, ${n * 100}%)`;
+        n < 0.1
+          ? "transparent"
+          : `hsl(${strokeHue}, 10%, ${n * (100 / amplitude)}%)`;
 
       segment(context, x, y, angle, length, lineWidth);
     });
