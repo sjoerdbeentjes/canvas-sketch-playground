@@ -1,12 +1,5 @@
-function requireAll(r) {
-  r.keys().forEach(r);
-}
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App.jsx";
 
-const app = {
-  init() {
-    console.log(this.files);
-  },
-  files: requireAll(require.context("./sketches/", true, /\.js$/)),
-};
-
-app.init();
+ReactDOM.render(<App />, document.getElementById("root"));

@@ -92,4 +92,4 @@ function dot(context, x, y, size) {
   context.stroke();
 }
 
-canvasSketch(sketch, settings);
+export default { sketch, settings };

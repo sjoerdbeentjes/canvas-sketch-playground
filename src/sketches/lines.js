@@ -51,4 +51,4 @@ const sketch = ({ width, height }) => {
   };
 };
 
-canvasSketch(sketch, settings);
+export default { sketch, settings };

@@ -89,4 +89,4 @@ function segment(context, x, y, angle = 0, length = 1, lineWidth = 1) {
   context.stroke();
 }
 
-canvasSketch(sketch, settings);
+export default { sketch, settings };

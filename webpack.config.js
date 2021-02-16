@@ -10,10 +10,22 @@ module.exports = {
   devtool: "inline-source-map",
   devServer: {
     contentBase: "./dist",
+    historyApiFallback: true,
+  },
+  module: {
+    rules: [
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: ["babel-loader"],
+      },
+    ],
   },
   plugins: [
     new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
-    new HtmlWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      template: './public/index.html'
+    }),
   ],
   output: {
     filename: "[name].bundle.js",
