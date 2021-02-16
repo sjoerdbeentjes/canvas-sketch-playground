@@ -1,6 +1,7 @@
+// based on https://github.com/mattdesl/canvas-sketch/blob/c355bd3cf29ea682425355fb616891d160fb9172/examples/canvas-generative-silhouette.js
+
 import Random from "canvas-sketch-util/random";
 import { linspace } from "canvas-sketch-util/math";
-import random from "canvas-sketch-util/random";
 
 const defaultSeed = "";
 
@@ -23,7 +24,7 @@ const sketch = ({ width, height }) => {
   const margin = 0;
   const gridSize = 60;
   const background = "black";
-  const strokeHue = random.range(0, 360); 
+  const strokeHue = Random.range(0, 360); 
 
   const length = pageSize * 0.1;
   const lineWidth = pageSize * 0.00175;
