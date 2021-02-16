@@ -2,6 +2,22 @@ import React from "react";
 import { useParams } from "react-router";
 import canvasSketch from "canvas-sketch";
 
+const containerStyles = {
+  width: "100vw",
+  height: "100vh",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  flexDirection: "row",
+  margin: "0",
+};
+
+const canvasStyles = {
+  margin: "auto",
+  display: "block",
+  boxShadow: "0px 2px 12px -2px rgb(0 0 0 / 15%)",
+};
+
 export default function Sketch() {
   const { id } = useParams();
   const canvasRef = React.useRef(null);
@@ -19,5 +35,9 @@ export default function Sketch() {
     }
   }, [canvasRef]);
 
-  return <canvas key={id} ref={canvasRef} />;
+  return (
+    <div style={containerStyles}>
+      <canvas key={id} ref={canvasRef} style={canvasStyles} />
+    </div>
+  );
 }
