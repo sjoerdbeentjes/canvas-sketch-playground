@@ -1,4 +1,4 @@
-// based on https://github.com/mattdesl/canvas-sketch/blob/c355bd3cf29ea682425355fb616891d160fb9172/examples/canvas-generative-silhouette.js
+// based on https://codesandbox.io/s/yp21r
 
 import Random from "canvas-sketch-util/random";
 import { linspace } from "canvas-sketch-util/math";
