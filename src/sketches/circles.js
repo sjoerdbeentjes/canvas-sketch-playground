@@ -14,22 +14,20 @@ console.log("Random Seed:", Random.getSeed());
 const settings = {
   hotkeys: false,
   suffix: Random.getSeed(),
-  dimensions: [1000, 1000],
+  dimensions: [2000, 2000],
 };
 
 const sketch = ({ width, height }) => {
   const pageSize = Math.min(width, height);
 
-  // page settings
   const margin = 0;
-  const gridSize = 50;
+  const gridSize = 10;
   const background = "black";
-
-  // segment settings
+  const circleSize = width / gridSize;
+  const lineWidth = 10;
   const frequency = 0.75;
   const alpha = 1;
 
-  // Create some flat data structure worth of points
   const cells = linspace(gridSize, true)
     .map((v) => {
       return linspace(gridSize, true).map((u) => {
@@ -38,42 +36,38 @@ const sketch = ({ width, height }) => {
     })
     .flat();
 
-  return ({ context, frame, playhead }) => {
-    // Fill the canvas
+  return ({ context, playhead }) => {
     context.fillStyle = background;
     context.globalAlpha = 1;
     context.fillRect(0, 0, width, height);
 
-    // draw grid
     const innerSize = pageSize - margin * 1;
+
     cells.forEach((cell) => {
       const [u, v] = cell;
 
-      const n = Random.noise2D(u * 2, v * 2, frequency);
-      const size = Math.abs(n) * 15;
-
-      // scale to inner size
       let x = u * innerSize;
       let y = v * innerSize;
 
-      // center on page
       x += (width - innerSize) / 2;
       y += (height - innerSize) / 2;
 
-      // draw cell
+      const n = Random.noise2D(x, y, frequency);
+
       context.globalAlpha = alpha;
-      context.strokeStyle = "white";
-      context.fillStyle = "white";
+      context.fillStyle = "transparent";
+      context.lineWidth = lineWidth;
       context.fill();
 
-      dot(context, x, y, size);
+      context.strokeStyle = "white";
+      circle(context, x, y, circleSize, playhead);
     });
   };
 };
 
-function dot(context, x, y, size) {
+function circle(context, x, y, size) {
   context.beginPath();
-  context.arc(x, y, size, 0, 2 * Math.PI, true);
+  context.arc(x, y, size, 0, 2 * Math.PI);
   context.stroke();
 }
 
